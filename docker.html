@@ -65,11 +65,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#major-clean">Major clean</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise">Exercise</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#volumes">Volumes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ports">Ports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#volume-exercises">Volume exercises</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#docker-run-user">docker run –user</a></li>
 </ul>
@@ -179,7 +177,6 @@
 <ul class="simple">
 <li><p>choose the version of Ubuntu you are fetching: check the different tags</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/dockerhub_ubuntu_1804.png"><img alt="_images/dockerhub_ubuntu_1804.png" src="_images/dockerhub_ubuntu_1804.png" style="width: 850px;" /></a>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:18.04</span>
 </pre></div>
 </div>
@@ -320,41 +317,6 @@
 </ul>
 </section>
 </section>
-<section id="exercise">
-<h3>Exercise<a class="headerlink" href="#exercise" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><ul>
-<li><p><strong>Imagemagick</strong></p></li>
-</ul>
-</li>
-<li><p>Pull the imagemagick image from: <a class="reference external" href="https://hub.docker.com/r/acleancoder/imagemagick-full">https://hub.docker.com/r/acleancoder/imagemagick-full</a></p></li>
-<li><p>Check the version of the convert command.</p></li>
-<li><p>Start a container interactively.</p></li>
-<li><p>Inside the container: download this png image (<a class="reference external" href="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png">https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png</a>)</p></li>
-<li><p>Convert it to .jpg using the convert command of imagemagick (format; convert image.png image.jpg).</p></li>
-<li><p>Exit the container.</p></li>
-<li><p>Copy the jpg image back from the stopped container! Try new command <cite>docker cp</cite>.</p></li>
-</ul>
-<details>
-<summary><a>Suggested solution</a></summary><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Pull<span class="w"> </span>image
-<span class="go">docker pull acleancoder/imagemagick-full</span>
-
-<span class="gp"># </span>Check<span class="w"> </span>version<span class="w"> </span>of<span class="w"> </span><span class="sb">`</span>convert<span class="sb">`</span>
-<span class="go">docker run acleancoder/imagemagick-full convert --version</span>
-
-<span class="gp"># </span>Start<span class="w"> </span>interactive<span class="w"> </span>container
-<span class="go">docker run -it acleancoder/imagemagick-full</span>
-<span class="gp">  # </span>fetch<span class="w"> </span>png<span class="w"> </span>image
-<span class="go">  &gt; wget  https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png</span>
-<span class="gp">  # </span>convert<span class="w"> </span>to<span class="w"> </span>jpg
-<span class="go">  &gt; convert vertical-logo-monochromatic.png myimage.jpg</span>
-<span class="gp">  # </span><span class="nb">exit</span><span class="w"> </span>container
-
-<span class="gp"># </span>fetch<span class="w"> </span>container<span class="w"> </span>ID<span class="w"> </span>with<span class="w"> </span><span class="sb">`</span>ps<span class="w"> </span>-a<span class="sb">`</span><span class="w"> </span>and<span class="w"> </span>use<span class="w"> </span><span class="sb">`</span>docker<span class="w"> </span>cp<span class="sb">`</span><span class="w"> </span>to<span class="w"> </span>copy<span class="w"> </span>jpg<span class="w"> </span>file<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>stopped<span class="w"> </span>container<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>host
-<span class="go">docker cp *CONTAINER_ID*:/myimage.jpg .</span>
-</pre></div>
-</div>
-</details></section>
 </section>
 <section id="volumes">
 <h2>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h2>
@@ -366,30 +328,6 @@
 <span class="go">docker exec -ti fastqc_container /bin/bash</span>
 <span class="go">&gt; ls -l /scratch</span>
 <span class="go">&gt; exit</span>
-</pre></div>
-</div>
-</section>
-<section id="ports">
-<h2>Ports<a class="headerlink" href="#ports" title="Link to this heading"></a></h2>
-<p>The same as with volumes, but with ports, to access Internet services.</p>
-<p>Syntax: <strong>–publish/-p</strong> <em>host:container</em></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach --name webserver nginx</span>
-<span class="go">curl localhost:80</span>
-<span class="go">docker exec webserver curl localhost:80</span>
-<span class="go">docker rm -f webserver</span>
-</pre></div>
-</div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach --name webserver --publish 80:80 nginx</span>
-<span class="go">curl localhost:80</span>
-<span class="go">docker rm -f webserver</span>
-</pre></div>
-</div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach --name webserver -p 8080:80 nginx</span>
-<span class="go">curl localhost:80</span>
-<span class="go">curl localhost:8080</span>
-<span class="go">docker exec webserver curl localhost:80</span>
-<span class="go">docker exec webserver curl localhost:8080</span>
-<span class="go">docker rm -f webserver</span>
 </pre></div>
 </div>
 </section>
