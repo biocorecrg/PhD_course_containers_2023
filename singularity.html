@@ -60,15 +60,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#running-and-executing-containers">Running and executing containers</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#singularity-shell">Singularity shell</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#singularity-exec">Singularity exec</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#singularity-run">Singularity run</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#environment-control">Environment control</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#exercise">Exercise</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#singularity-recipes">Singularity recipes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#docker-bootstrap">Docker bootstrap</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#singularity-advanced-aspects">Singularity advanced aspects</a><ul>
@@ -234,19 +229,11 @@
 </pre></div>
 </div>
 </section>
-<section id="singularity-run">
-<h4>Singularity run<a class="headerlink" href="#singularity-run" title="Link to this heading"></a></h4>
-<p>This executes runscript from recipe definition (equivalent to <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>). Not so common for HPC uses. More common for instances (servers).</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity run fastqc-0.11.9.sif</span>
-</pre></div>
-</div>
-</section>
 <section id="environment-control">
 <h4>Environment control<a class="headerlink" href="#environment-control" title="Link to this heading"></a></h4>
 <p>By default Singularity inherits a profile environment (e.g., PATH environment variable). This may be convenient in some circumstances, but it can also lead to unexpected problems when your own environment clashes with the default one from the image.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity shell -e fastqc-0.11.9.sif</span>
 <span class="go">singularity exec -e fastqc-0.11.9.sif fastqc</span>
-<span class="go">singularity run -e fastqc-0.11.9.sif</span>
 </pre></div>
 </div>
 <p>Compare <code class="docutils literal notranslate"><span class="pre">env</span></code> command with and without -e modifier.</p>
@@ -269,26 +256,6 @@
 <li><p>Explore the inside contents of the image</p></li>
 <li><p>Execute in different ways <code class="docutils literal notranslate"><span class="pre">samtools</span></code> program (e. g., using <em>fqidx</em> option)</p></li>
 </ul>
-</section>
-</section>
-<section id="singularity-recipes">
-<h2>Singularity recipes<a class="headerlink" href="#singularity-recipes" title="Link to this heading"></a></h2>
-<section id="docker-bootstrap">
-<h3>Docker bootstrap<a class="headerlink" href="#docker-bootstrap" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BootStrap</span><span class="p">:</span> <span class="n">docker</span>
-<span class="n">From</span><span class="p">:</span> <span class="n">biocontainers</span><span class="o">/</span><span class="n">fastqc</span><span class="p">:</span><span class="n">v0</span><span class="mf">.11.9</span><span class="n">_cv7</span>
-
-<span class="o">%</span><span class="n">runscript</span>
-    <span class="n">echo</span> <span class="s2">&quot;Welcome to FastQC Image&quot;</span>
-    <span class="n">fastqc</span> <span class="o">--</span><span class="n">version</span>
-
-<span class="o">%</span><span class="n">post</span>
-    <span class="n">echo</span> <span class="s2">&quot;Image built&quot;</span>
-</pre></div>
-</div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo singularity build fastqc.sif docker.singularity</span>
-</pre></div>
-</div>
 </section>
 </section>
 <section id="singularity-advanced-aspects">
@@ -364,7 +331,7 @@
 </section>
 <section id="global-singularity-configuration">
 <h4>Global singularity configuration<a class="headerlink" href="#global-singularity-configuration" title="Link to this heading"></a></h4>
-<p>Normally at <code class="docutils literal notranslate"><span class="pre">/etc/singularity/singularity.conf</span></code> or similar (e.g preceded by <code class="docutils literal notranslate"><span class="pre">/usr/local/</span></code>)</p>
+<p>Normally at <code class="docutils literal notranslate"><span class="pre">/etc/singularity/singularity.conf</span></code> or similar (e.g., preceded by <code class="docutils literal notranslate"><span class="pre">/usr/local/</span></code>)</p>
 <ul class="simple">
 <li><p>It can only be modified by users with administration permissions</p></li>
 <li><p>Worth noting <code class="docutils literal notranslate"><span class="pre">bind</span> <span class="pre">path</span></code> lines, which point default mounted directories in containers</p></li>
