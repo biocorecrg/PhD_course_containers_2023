@@ -288,7 +288,7 @@
 <section id="volumes">
 <h2>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h2>
 <p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
-<p>Syntax: <strong>–volume/-v</strong> <em>host:container</em></p>
+<p>Syntax: <strong>--volume/-v</strong> <em>host:container</em></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir test</span>
 <span class="go">touch test/test</span>
 <span class="go">docker run --detach --volume $(pwd)/test:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 tail -f /dev/null</span>
