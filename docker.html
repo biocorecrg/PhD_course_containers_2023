@@ -50,6 +50,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#what-is-docker">What is Docker?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-components">Docker components</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#images-versus-containers">Images versus containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#podman-setup">Podman setup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-vocabulary">Docker vocabulary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#using-existing-images">Using existing images</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#explore-docker-hub">Explore Docker hub</a></li>
@@ -120,7 +121,9 @@
 <li><p><a class="reference external" href="https://www.docker.com/products/container-runtime">Docker Community Edition</a>.</p></li>
 <li><p>Docker Enterprise Edition.</p></li>
 </ul>
-<p>There is an increasing number of alternative container technologies and providers. Many of them are actually based on software components originally from the Docker stack and they normally try to address some specific use cases or weakpoints. As a example, <strong>Singularity</strong>, that we introduce later in this couse, is focused in HPC environments. Another case, <strong>Podman</strong>, keeps a high functional compatibility with Docker but with a different focus on technology (not keeping a daemon) and permissions.</p>
+<p>There is an increasing number of alternative container technologies and providers. Many of them are actually based on software components originally from the Docker stack, and they normally try to address some specific use cases or weak points. As an example, <strong>Singularity</strong>, that we introduce later in this course, is focused on HPC environments.</p>
+<p>Another case, <strong>Podman</strong>, keeps a high functional compatibility with Docker but with a different focus on technology (not keeping a daemon) and permissions. <strong>We will actually use Podman in this course</strong>.
+<code class="docutils literal notranslate"><span class="pre">docker</span></code> command will be an alias of <code class="docutils literal notranslate"><span class="pre">podman</span></code> in our environment.</p>
 </section>
 <section id="docker-components">
 <h3>Docker components<a class="headerlink" href="#docker-components" title="Link to this heading"></a></h3>
@@ -142,6 +145,17 @@
 <p>When you start an image, you have a running container of this image. You can have many running containers of the same image.</p>
 <p><em>“The image is the recipe, the container is the cake; you can make as many cakes as you like with a given recipe.”</em></p>
 <p><a class="reference external" href="https://stackoverflow.com/questions/23735149/what-is-the-difference-between-a-docker-image-and-a-container">https://stackoverflow.com/questions/23735149/what-is-the-difference-between-a-docker-image-and-a-container</a></p>
+</section>
+<section id="podman-setup">
+<h3>Podman setup<a class="headerlink" href="#podman-setup" title="Link to this heading"></a></h3>
+<p>Place the following bit of code in <code class="docutils literal notranslate"><span class="pre">~/.config/containers/storage.conf</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[storage]</span>
+<span class="go">  driver = &quot;overlay&quot;</span>
+<span class="go">  graphroot = &quot;/tmp/$USER/.local/share/containers/storage&quot;</span>
+<span class="go">  [storage.options]</span>
+<span class="go">    mount_program = &quot;/usr/bin/fuse-overlayfs&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="docker-vocabulary">
 <h3>Docker vocabulary<a class="headerlink" href="#docker-vocabulary" title="Link to this heading"></a></h3>
