@@ -61,7 +61,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#docker-run-run-image-i-e-start-a-container">docker run: run image, i.e. start a container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-ps-check-containers-status">docker ps: check containers status</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-exec-execute-process-in-running-container">docker exec: execute process in running container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-stop-start-restart-actions-on-container">docker stop, start, restart: actions on container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-rm-docker-rmi-clean-up">docker rm, docker rmi: clean up!</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#major-clean">Major clean</a></li>
 </ul>
@@ -177,7 +176,7 @@
 <ul class="simple">
 <li><p>choose the version of Ubuntu you are fetching: check the different tags</p></li>
 </ul>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:18.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker pull ubuntu:22.04</span>
 </pre></div>
 </div>
 </section>
@@ -210,26 +209,26 @@
 <p><strong>docker run</strong> creates a fresh container (active instance of the image) from a <strong>Docker (static) image</strong>, and runs it.</p>
 <p>The format is:</p>
 <p>docker run image:tag <strong>command</strong></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:18.04 /bin/ls</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:22.04 /bin/ls</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/docker_run_ls.png"><img alt="_images/docker_run_ls.png" src="_images/docker_run_ls.png" style="width: 200px;" /></a>
 <p>Now execute <strong>ls</strong> in your current working directory: is the result the same?</p>
 <p>You can execute any program/command that is stored inside the image:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:18.04 /bin/whoami</span>
-<span class="go">docker run ubuntu:18.04 cat /etc/issue</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run ubuntu:22.04 /bin/whoami</span>
+<span class="go">docker run ubuntu:22.04 cat /etc/issue</span>
 </pre></div>
 </div>
 <p>You can either execute programs in the image from the command line (see above) or <strong>execute a container interactively</strong>, i.e. <strong>“enter”</strong> the container.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:18.04 /bin/bash</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run -it ubuntu:22.04 /bin/bash</span>
 </pre></div>
 </div>
 <p>Run container as daemon (in background)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach ubuntu:18.04 tail -f /dev/null</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach ubuntu:22.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 <p>Run container as daemon (in background) with a given name</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach --name myubuntu ubuntu:18.04 tail -f /dev/null</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --detach --name myubuntu ubuntu:22.04 tail -f /dev/null</span>
 </pre></div>
 </div>
 </section>
@@ -257,45 +256,13 @@
 </pre></div>
 </div>
 </section>
-<section id="docker-stop-start-restart-actions-on-container">
-<h3>docker stop, start, restart: actions on container<a class="headerlink" href="#docker-stop-start-restart-actions-on-container" title="Link to this heading"></a></h3>
-<p>Stop a running container:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker stop myubuntu</span>
-
-<span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Start a stopped container (does NOT create a new one):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker start myubuntu</span>
-
-<span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Restart a running container:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker restart myubuntu</span>
-
-<span class="go">docker ps -a</span>
-</pre></div>
-</div>
-<p>Run with restart enabled</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --restart=unless-stopped --detach --name myubuntu2 ubuntu:18.04 tail -f /dev/null</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Restart policies: no (default), always, on-failure, unless-stopped</p></li>
-</ul>
-<p>Update restart policy</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker update --restart unless-stopped myubuntu</span>
-</pre></div>
-</div>
-</section>
 <section id="docker-rm-docker-rmi-clean-up">
 <h3>docker rm, docker rmi: clean up!<a class="headerlink" href="#docker-rm-docker-rmi-clean-up" title="Link to this heading"></a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rm myubuntu</span>
 <span class="go">docker rm -f myubuntu</span>
 </pre></div>
 </div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:18.04</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker rmi ubuntu:22.04</span>
 </pre></div>
 </div>
 <section id="major-clean">
@@ -322,9 +289,9 @@
 <h2>Volumes<a class="headerlink" href="#volumes" title="Link to this heading"></a></h2>
 <p>Docker containers are fully isolated. It is necessary to mount volumes in order to handle input/output files.</p>
 <p>Syntax: <strong>–volume/-v</strong> <em>host:container</em></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir datatest</span>
-<span class="go">touch datatest/test</span>
-<span class="go">docker run --detach --volume $(pwd)/datatest:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 tail -f /dev/null</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir test</span>
+<span class="go">touch test/test</span>
+<span class="go">docker run --detach --volume $(pwd)/test:/scratch --name fastqc_container biocontainers/fastqc:v0.11.9_cv7 tail -f /dev/null</span>
 <span class="go">docker exec -ti fastqc_container /bin/bash</span>
 <span class="go">&gt; ls -l /scratch</span>
 <span class="go">&gt; exit</span>
@@ -342,7 +309,7 @@
 <h3>docker run –user<a class="headerlink" href="#docker-run-user" title="Link to this heading"></a></h3>
 <p>It is possible to run certain containers with a specific user, appending <code class="docutils literal notranslate"><span class="pre">`run</span> <span class="pre">--user`</span></code>.</p>
 <p>A convenient command would be:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --user $(id -u):$(id -g) --detach --volume $(pwd)/datatest:/scratch --name user_test biocontainers/fastqc:v0.11.9_cv7 touch /scratch/userfile</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --user $(id -u):$(id -g) --detach --volume $(pwd)/test:/scratch --name user_test biocontainers/fastqc:v0.11.9_cv7 touch /scratch/userfile</span>
 </pre></div>
 </div>
 </section>
