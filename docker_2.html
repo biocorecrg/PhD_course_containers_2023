@@ -62,11 +62,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#build-exercise">Build exercise</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#additional-commands">Additional commands</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#example-dealing-with-tar-images">Example dealing with tar images</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#note-about-the-tar-formats">Note about the tar formats</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="singularity.html">Singularity</a></li>
@@ -336,48 +331,6 @@ If it is run with the argument <strong>hello moon</strong> it will execute <cite
 </pre></div>
 </div>
 </details></section>
-</section>
-<section id="additional-commands">
-<h2>Additional commands<a class="headerlink" href="#additional-commands" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>docker inspect</strong>: Get details from containers (both running and stopped). Things such as IPs, volumes, etc.</p></li>
-<li><p><strong>docker logs</strong>: Get <em>console</em> messages from running containers. Useful when using with web services.</p></li>
-<li><p><strong>docker commit</strong>: Turn a container into an image. It make senses to use when modifying container interactively. However this is bad for reproducibility if no steps are saved.</p></li>
-</ul>
-<p>Good for long-term reproducibility and for critical production environments:</p>
-<ul class="simple">
-<li><p><strong>docker save</strong>: Save an image into an image tar archive.</p></li>
-<li><p><strong>docker load</strong>: Load an image tar archive to become an image.</p></li>
-<li><p><strong>docker export</strong>: Save a container filesystem into a tar archive.</p></li>
-<li><p><strong>docker import</strong>: Import a filesystem tar archive into an image (you need to specify a target tag).</p></li>
-</ul>
-<section id="example-dealing-with-tar-images">
-<h3>Example dealing with tar images<a class="headerlink" href="#example-dealing-with-tar-images" title="Link to this heading"></a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>save<span class="w"> </span>the<span class="w"> </span>image<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>tar
-<span class="go">docker save -o random_numbers.tar random_numbers</span>
-
-<span class="gp"># </span>Remove<span class="w"> </span>the<span class="w"> </span>original<span class="w"> </span>image
-<span class="go">docker rmi random_numbers</span>
-
-<span class="gp"># </span>Check<span class="w"> </span>existing<span class="w"> </span>images<span class="w"> </span>now
-<span class="go">docker images</span>
-
-<span class="gp"># </span>Recover<span class="w"> </span>it
-<span class="go">docker load &lt; random_numbers.tar</span>
-
-<span class="gp"># </span>Check<span class="w"> </span>now<span class="w"> </span>images
-<span class="go">docker images</span>
-</pre></div>
-</div>
-</section>
-<section id="note-about-the-tar-formats">
-<h3>Note about the tar formats<a class="headerlink" href="#note-about-the-tar-formats" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>If you check the tar archives generated thanks to <strong>save</strong> with the ones using export, you will notice they do not look the same.</p></li>
-<li><p>The former ones ressemble more what you will find in <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> (that is where Docker daemon stores its data) and it includes metadata information (so it is not necessary to specify an image tag).</p></li>
-<li><p>On the other hand, tar files generated with <strong>export</strong> they simply contantain the image filesystem. You lost that way a lot of metadata associated to the original image, such as the tags, but also things such as ENTRYPOINT and CMD instructions.</p></li>
-</ul>
-</section>
 </section>
 </section>
 
