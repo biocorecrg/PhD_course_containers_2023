@@ -224,7 +224,7 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9.sif fastqc</span>
 </pre></div>
 </div>
-<p>Test a processing of a file from <em>testdata</em> directory:</p>
+<p>Test a processing of a file from Git <em>data</em> directory:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">singularity exec fastqc-0.11.9_cv7.sif fastqc B7_input_s_chr19.fastq.gz</span>
 </pre></div>
 </div>
@@ -267,9 +267,9 @@
 <li><p>Default ones, no need to mount them explicitly (for 3.6.x): <code class="docutils literal notranslate"><span class="pre">`$HOME`</span></code> , <code class="docutils literal notranslate"><span class="pre">`/sys:/sys`</span></code> , <code class="docutils literal notranslate"><span class="pre">`/proc:/proc`</span></code>, <code class="docutils literal notranslate"><span class="pre">`/tmp:/tmp`</span></code>, <code class="docutils literal notranslate"><span class="pre">`/var/tmp:/var/tmp`</span></code>, <code class="docutils literal notranslate"><span class="pre">`/etc/resolv.conf:/etc/resolv.conf`</span></code>, <code class="docutils literal notranslate"><span class="pre">`/etc/passwd:/etc/passwd`</span></code>, and <code class="docutils literal notranslate"><span class="pre">`$PWD`</span></code>  <a class="reference external" href="https://apptainer.org/docs/user/main/bind_paths_and_mounts.html">Ref</a></p></li>
 </ul>
 <p>For others, need to be done explicitly (syntax: host:container)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir datatest</span>
-<span class="go">touch datatest/testout</span>
-<span class="go">singularity shell -e -B ./datatest:/scratch fastqc-0.11.9.sif</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir test</span>
+<span class="go">touch test/testout</span>
+<span class="go">singularity shell -e -B ./test:/scratch fastqc-0.11.9.sif</span>
 <span class="go">&gt; touch /scratch/testin</span>
 <span class="go">&gt; exit</span>
 <span class="go">ls -l testdir</span>
@@ -280,26 +280,26 @@
 <p>Using the 2 fastq available files, process them outside and inside a mounted directory using fastqc.</p>
 <details>
 <summary><a>Suggested solution</a></summary><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>dummy<span class="w"> </span>directory
-<span class="go">mkdir datatest</span>
+<span class="go">mkdir test</span>
 
-<span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>copy<span class="w"> </span>contents<span class="w"> </span>of<span class="w"> </span>testdata<span class="w"> </span><span class="k">in</span><span class="w"> </span>that<span class="w"> </span>directory
+<span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>copy<span class="w"> </span>contents<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>directory<span class="w"> </span><span class="k">in</span><span class="w"> </span>that<span class="w"> </span>directory
 
-<span class="go">singularity exec fastqc.sif fastqc datatest/*fastq.gz</span>
+<span class="go">singularity exec fastqc.sif fastqc test/*fastq.gz</span>
 
 <span class="gp"># </span>Check<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>some<span class="w"> </span>HTMLs<span class="w"> </span>there.<span class="w"> </span>Remove<span class="w"> </span>them
-<span class="go">rm datatest/*html</span>
+<span class="go">rm test/*html</span>
 
 <span class="gp"># </span>Let<span class="err">&#39;</span>s<span class="w"> </span>use<span class="w"> </span>shell
 <span class="go">singularity shell fastqc.sif</span>
-<span class="go">&gt; cd datatest</span>
+<span class="go">&gt; cd test</span>
 <span class="go">&gt; fastqc *fastq.gz</span>
 <span class="go">&gt; exit</span>
 
 <span class="gp"># </span>Check<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>some<span class="w"> </span>HTMLs<span class="w"> </span>there.<span class="w"> </span>Remove<span class="w"> </span>them
-<span class="go">singularity exec -B ./datatest:/scratch fastqc.sif fastqc /scratch/*fastq.gz</span>
+<span class="go">singularity exec -B ./test:/scratch fastqc.sif fastqc /scratch/*fastq.gz</span>
 
 <span class="gp"># </span>What<span class="w"> </span>happens<span class="w"> </span>here!
-<span class="go">singularity exec -B ./datatest:/scratch fastqc.sif bash -c &#39;fastqc /scratch/*fastq.gz&#39;</span>
+<span class="go">singularity exec -B ./test:/scratch fastqc.sif bash -c &#39;fastqc /scratch/*fastq.gz&#39;</span>
 </pre></div>
 </div>
 </details></section>
