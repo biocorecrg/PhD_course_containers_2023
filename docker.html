@@ -70,7 +70,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#volumes">Volumes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#volume-exercises">Volume exercises</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#docker-run-user">docker run –user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-run-user">docker run --user</a></li>
 </ul>
 </li>
 </ul>
@@ -122,7 +122,7 @@
 <li><p>Docker Enterprise Edition.</p></li>
 </ul>
 <p>There is an increasing number of alternative container technologies and providers. Many of them are based on software components originally from the Docker stack, and they usually try to address some specific use cases or weak points. As an example, <strong>Singularity</strong>, which we introduce later in this course, is focused on HPC environments.</p>
-<p>Another case, <strong>Podman</strong> &lt;<a class="reference external" href="https://podman.io">https://podman.io</a>&gt;`__, keeps high functional compatibility with Docker but with a different focus on technology (not keeping a daemon) and permissions. <strong>We will use Podman in this course</strong>.
+<p>Another case, <strong>Podman</strong> &lt;<a class="reference external" href="https://podman.io">https://podman.io</a>&gt;`, keeps high functional compatibility with Docker but with a different focus on technology (not keeping a daemon) and permissions. <strong>We will use Podman in this course</strong>.
 <code class="docutils literal notranslate"><span class="pre">docker</span></code> command will be an alias of <code class="docutils literal notranslate"><span class="pre">podman</span></code> in our environment.</p>
 </section>
 <section id="docker-components">
@@ -320,7 +320,7 @@
 <li><p>Run fastqc non-interactively (outside the container)</p></li>
 </ol>
 <section id="docker-run-user">
-<h3>docker run –user<a class="headerlink" href="#docker-run-user" title="Link to this heading"></a></h3>
+<h3>docker run --user<a class="headerlink" href="#docker-run-user" title="Link to this heading"></a></h3>
 <p>It is possible to run some containers with a specific user, appending <code class="docutils literal notranslate"><span class="pre">`run</span> <span class="pre">--user`</span></code>.</p>
 <p>A convenient command would be:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --user $(id -u):$(id -g) --detach --volume $(pwd)/test:/scratch --name user_test biocontainers/fastqc:v0.11.9_cv7 touch /scratch/userfile</span>
