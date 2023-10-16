@@ -69,10 +69,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#volumes">Volumes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#volume-exercises">Volume exercises</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#docker-run-user">docker run --user</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docker_2.html">Docker 2</a></li>
@@ -312,22 +308,6 @@
 <span class="go">&gt; exit</span>
 </pre></div>
 </div>
-</section>
-<section id="volume-exercises">
-<h2>Volume exercises<a class="headerlink" href="#volume-exercises" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Copy the 2 fastq files from available datasets in Github repository and place them in mounted directory</p></li>
-<li><p>Run fastqc interactively (inside container): <code class="docutils literal notranslate"><span class="pre">`fastqc</span>&#160; <span class="pre">/scratch/*.gz`</span></code></p></li>
-<li><p>Run fastqc non-interactively (outside the container)</p></li>
-</ol>
-<section id="docker-run-user">
-<h3>docker run --user<a class="headerlink" href="#docker-run-user" title="Link to this heading"></a></h3>
-<p>It is possible to run some containers with a specific user, appending <code class="docutils literal notranslate"><span class="pre">`run</span> <span class="pre">--user`</span></code>.</p>
-<p>A convenient command would be:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docker run --user $(id -u):$(id -g) --detach --volume $(pwd)/test:/scratch --name user_test biocontainers/fastqc:v0.11.9_cv7 touch /scratch/userfile</span>
-</pre></div>
-</div>
-</section>
 </section>
 </section>
 
